@@ -1,7 +1,7 @@
 # ISAD251 - Database Application Development COURSEWORK 01
 
 ## Linked YouTube video (of using this database application)
-[https://youtu.be/Twxm_qBOgAg)](https://youtu.be/Twxm_qBOgAg)
+[https://youtu.be/Twxm_qBOgAg](https://youtu.be/Twxm_qBOgAg)
 
 ## Screenshots of the application
 
