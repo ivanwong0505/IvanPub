@@ -1,0 +1,84 @@
+create table [dbo].[AspNetUsers] (
+    [Id] [nvarchar](128) not null,
+    [Email] [nvarchar](256) null,
+    [EmailConfirmed] [bit] not null,
+    [PasswordHash] [nvarchar](max) null,
+    [SecurityStamp] [nvarchar](max) null,
+    [PhoneNumber] [nvarchar](max) null,
+    [PhoneNumberConfirmed] [bit] not null,
+    [TwoFactorEnabled] [bit] not null,
+    [LockoutEndDateUtc] [datetime] null,
+    [LockoutEnabled] [bit] not null,
+    [AccessFailedCount] [int] not null,
+    [UserName] [nvarchar](256) not null,
+    primary key ([Id])
+);
+create table [dbo].[CartItems] (
+    [CartItemId] [int] not null identity,
+    [SessionId] [nvarchar](max) null,
+    [ProductId] [int] not null,
+    [Count] [int] not null,
+    [DateCreated] [datetime] not null,
+    primary key ([CartItemId])
+);
+create table [dbo].[AspNetRoles] (
+    [Id] [nvarchar](128) not null,
+    [Name] [nvarchar](256) not null,
+    primary key ([Id])
+);
+create table [dbo].[AspNetUserClaims] (
+    [Id] [int] not null identity,
+    [UserId] [nvarchar](128) not null,
+    [ClaimType] [nvarchar](max) null,
+    [ClaimValue] [nvarchar](max) null,
+    primary key ([Id])
+);
+create table [dbo].[AspNetUserLogins] (
+    [LoginProvider] [nvarchar](128) not null,
+    [ProviderKey] [nvarchar](128) not null,
+    [UserId] [nvarchar](128) not null,
+    primary key ([LoginProvider], [ProviderKey], [UserId])
+);
+create table [dbo].[AspNetUserRoles] (
+    [UserId] [nvarchar](128) not null,
+    [RoleId] [nvarchar](128) not null,
+    primary key ([UserId], [RoleId])
+);
+create table [dbo].[Orders] (
+    [Id] [int] not null identity,
+    [OrderDate] [datetime] not null,
+    [Username] [nvarchar](max) null,
+    [Total] [decimal](18, 2) not null,
+    primary key ([Id])
+);
+create table [dbo].[OrderDetails] (
+    [Id] [int] not null identity,
+    [OrderId] [int] not null,
+    [ProductId] [int] not null,
+    [Quantity] [int] not null,
+    [UnitPrice] [decimal](18, 2) not null,
+    primary key ([Id])
+);
+create table [dbo].[Products] (
+    [Id] [int] not null identity,
+    [Name] [nvarchar](150) not null,
+    [ProductTypeId] [int] not null,
+    [Description] [nvarchar](max) null,
+    [Price] [decimal](18, 2) not null,
+    [ImageName] [nvarchar](256) null,
+    [IsForSale] [bit] not null,
+    primary key ([Id])
+);
+create table [dbo].[ProductTypes] (
+    [Id] [int] not null identity,
+    [Name] [nvarchar](max) null,
+    primary key ([Id])
+);
+alter table [dbo].[AspNetUserClaims] add constraint [ApplicationUser_Claims] foreign key ([UserId]) references [dbo].[AspNetUsers]([Id]) on delete cascade;
+alter table [dbo].[AspNetUserLogins] add constraint [ApplicationUser_Logins] foreign key ([UserId]) references [dbo].[AspNetUsers]([Id]) on delete cascade;
+alter table [dbo].[AspNetUserRoles] add constraint [ApplicationUser_Roles] foreign key ([UserId]) references [dbo].[AspNetUsers]([Id]) on delete cascade;
+alter table [dbo].[CartItems] add constraint [CartItem_Product] foreign key ([ProductId]) references [dbo].[Products]([Id]) on delete cascade;
+alter table [dbo].[AspNetUserRoles] add constraint [IdentityRole_Users] foreign key ([RoleId]) references [dbo].[AspNetRoles]([Id]) on delete cascade;
+alter table [dbo].[OrderDetails] add constraint [Order_OrderDetails] foreign key ([OrderId]) references [dbo].[Orders]([Id]) on delete cascade;
+alter table [dbo].[OrderDetails] add constraint [OrderDetail_Product] foreign key ([ProductId]) references [dbo].[Products]([Id]) on delete cascade;
+alter table [dbo].[Products] add constraint [ProductType_Products] foreign key ([ProductTypeId]) references [dbo].[ProductTypes]([Id]) on delete cascade;
