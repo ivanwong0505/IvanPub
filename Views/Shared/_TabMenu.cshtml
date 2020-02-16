@@ -1,0 +1,10 @@
+﻿<!-- Container (TabMenu Section) -->
+<div id="menu" class="container">
+    <ul class="nav nav-tabs">
+        <li class="active">@Html.ActionLink("Order Now", "Index", "Product")</li>
+        <li>@Html.ActionLink("Drink", "Index", "Product", new { productTypeID = 1 }, null)</li>
+        <li>@Html.ActionLink("Snack", "Index", "Product", new { productTypeID = 2 }, null)</li>
+
+    </ul>
+   
+</div>
